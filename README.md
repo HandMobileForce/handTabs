@@ -1,108 +1,40 @@
-# ionic-tab-template
+# HRMSv2研发项目
 
-[![Dependency Status](https://david-dm.org/snipking/angular1-onsen/status.svg)](https://david-dm.org/snipking/angular1-onsen#info=dependencies) [![devDependency Status](https://david-dm.org/snipking/angular1-onsen/dev-status.svg)](https://david-dm.org/snipking/angular1-onsen#info=devDependencies)
+一个基于 ionic v1 + angular v2 的 Hybrid app环境
 
-A seed template for angular1 & ionic project
+>建议: 推荐 Cordova 5.4.1以及以上 + gulp + bower
 
-This project is a starting point for building Angular 1.x applications with ionic. Also for further
+# 环境搭建
 
-1. ionic-tab
-2. ionic-tab-webpack
-3. ionic2-tab
-4. ionic2-tab-webpack
+```
+# 下载源代码
+$ git clone https://github.com/HandMobileForce/Demo.git
 
-learning course.
+# 切换到根目录
+$ cd Demo
 
->Warning: Make sure you're using the latest version of Node.js and NPM
-
-### Quick start
-
-> Clone/Download the repo
-
-```bash
-# clone repo
-$ git clone https://github.com/HandMobileForce/handTabs.git
-
-# change directory to app root
-$ cd handTabs
-
-# install the dependencies with npm
+# 安装gulp构建环境
 $ npm install
 
-# install the dependencies with bower
+# 安装js依赖库
 $ bower install
 
-# run with clean mode
-$ gulp clean
-
-# run with dev mode
+# 构建测试环境开发目录
 $ gulp run-dev
 
-
+# 浏览器运行app程序
+$ ionic serve
 ```
-##Every time after modify the code
 
-* developing build:
+##每次修改代码后
+* 构建测试环境目录:
 ```bash
 gulp build-dev
 ```
-* production build:
+* 构建正式环境目录:
 ```bash
 gulp build-prod
 ```
-
-If everything goes right, chrome browser will open with url [http://localhost:8384/index.html](http://localhost:8384/index.html)
-otherwise you should open it manually.
-
-# Table of Contents
-
-* [Getting Started](#getting-started)
-    * [Dependencies](#dependencies)
-    * [Installing](#installing)
-    * [Running the app](#running-the-app)
-    * [Developing](#developing)
-    * [Testing](#testing)
-* [License](#license)
-
-# Getting Started
-
-## Dependencies
-
-What you need to run this app:
-* `node` and `npm`
-
-## Installing
-
-* `npm install` to install build environment dependencies
-* `bower install` to install javascript library dependencies
-
-## Running the app
-
-Using NetBeans build-in server to run / debug
-
-## Developing
-
-### Build files
-
-* clean distribution (www) folder
-```bash
-gulp clean:
-```
-
-* developing build:
-```bash
-gulp build-dev
-```
-* production build:
-```bash
-gulp build-prod
-```
-
-* watch changes
-```bash
-gulp watch
-```
-
 
 * 切换到开发环境:
 ```bash
@@ -118,6 +50,53 @@ $ gulp run-prod
 $ gulp build-prod
 ```
 
+# Git 操作规范
+```
+st=>start: 开始
+e=>end: 结束
+clone=>operation: git clone url
+pullA=>operation: git pull origin develop:develop
+checkoutA=>operation: git checkout -b feature/A
+code=>operation: 编写代码/修改代码
+add=>operation: git add
+commit=>operation: git commit
+checkoutB=>operation: git checkout develop
+pullB=>operation: git pull origin develop:develop
+merge=>operation: git merge feature/A
+conflict=>operation: 如果有冲突，解决冲突
+push=>operation: git push origin develop:develop
+
+st->clone->pullA->checkoutA->code->add->commit->checkoutB->pullB->merge->conflict->push->e
+```
+
+# IDE
+WebStorm
+Android Studio
+Xcode
+
+
+# 开发规范
+```
+1.所有文件名，文件夹都以中划线分隔 ,全部小写 比如 contact-us
+2.html 尽量不要有style=“”
+3.javascript代码变量第二个单词首字母大写  比如 timeOffManagment
+4.javascript代码字符串定义用单引号  比如 var target=''
+5.angular的对象里面不要使用闭包
+6.angular的controller和service 用注入的时候，都要进行申明，目的是为了压缩混淆，如 angular.modal.controller('TabCtrl’,[‘$scope’,function($scope){}]);
+6.尽量谨慎使用$rootScope.$broadcast  因为$rootScope 不会在controller销毁的时候被回收
+7.scss的规范写法
+   approve-list {
+     ##
+     .approve-item{
+     ##
+     }
+   }
+8.代码里面一定要有注释
+9.angularJS项目 逻辑功能不要全部写在controller里面，因该写在service里面
+10. 在一个controller 里面，变量都在最上面，函数在下面，因为js执行的时候，他也会自动先去执行变量的定义
+```
+
+
 ###关于app下面的文件夹
 1、app目录下有config 和configProd，configxml和configxmlProd文件，
    resources目录下有dev和prod文件分别对应开发环境和正式环境。
@@ -128,18 +107,3 @@ $ gulp build-prod
    
 3、在page下面新建.scss文件的时候    注意theme文件夹里面的app.core.scss的修改
 
-### IDE
-WebStorm
-
-## Testing
-
-#### 1. Unit Tests
-
-_TODO_
-
-# License
-
-[APACHE](/LICENSE)
-# Demo
-# Demo
-# Demo
