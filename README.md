@@ -21,7 +21,7 @@ learning course.
 
 ```bash
 # clone repo
-$ git clone https://github.com/HandMobileForce/Demo.git
+$ git clone https://github.com/HandMobileForce/handTabs.git
 
 # change directory to app root
 $ cd Demo
