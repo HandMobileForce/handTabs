@@ -21,6 +21,7 @@ $ bower install
 
 # 构建测试环境开发目录
 $ gulp run-dev
+$ gulp build-dev
 
 # 浏览器运行app程序
 $ ionic serve
