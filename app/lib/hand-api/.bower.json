@@ -1,0 +1,26 @@
+{
+  "name": "hand-api",
+  "homepage": "https://github.com/HandMobileForce/hand-api",
+  "authors": [
+    "qi.he <qi.he@hand-china.com>"
+  ],
+  "description": "hand的指令库",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "d3fe930a19",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d3fe930a19af5525e0054ed57ff2bcbbba74921d"
+  },
+  "_source": "https://github.com/HandMobileForce/hand-api.git",
+  "_target": "*",
+  "_originalSource": "hand-api"
+}

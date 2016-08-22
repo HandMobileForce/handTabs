@@ -1,0 +1,17 @@
+{
+  "name": "hand-api",
+  "homepage": "https://github.com/HandMobileForce/hand-api",
+  "authors": [
+    "qi.he <qi.he@hand-china.com>"
+  ],
+  "description": "hand的指令库",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
