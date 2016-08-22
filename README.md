@@ -24,7 +24,7 @@ learning course.
 $ git clone https://github.com/HandMobileForce/handTabs.git
 
 # change directory to app root
-$ cd Demo
+$ cd handTabs
 
 # install the dependencies with npm
 $ npm install
