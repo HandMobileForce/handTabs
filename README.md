@@ -1,4 +1,4 @@
-# HRMSv2研发项目
+# handTabs 模板
 
 一个基于 ionic v1 + angular v2 的 Hybrid app环境
 
@@ -8,10 +8,10 @@
 
 ```
 # 下载源代码
-$ git clone https://github.com/HandMobileForce/Demo.git
+$ git clone https://github.com/HandMobileForce/handTabs.git
 
 # 切换到根目录
-$ cd Demo
+$ cd handTabs
 
 # 安装gulp构建环境
 $ npm install
