@@ -1,4 +1,4 @@
-# HRMSv2研发项目
+# handTabs 模板
 
 一个基于 ionic v1 + angular v2 的 Hybrid app环境
 
@@ -82,7 +82,8 @@ Xcode
 3.javascript代码变量第二个单词首字母大写  比如 timeOffManagment
 4.javascript代码字符串定义用单引号  比如 var target=''
 5.angular的对象里面不要使用闭包
-6.angular的controller和service 用注入的时候，都要进行申明，目的是为了压缩混淆，如 angular.modal.controller('TabCtrl’,[‘$scope’,function($scope){}]);
+6.angular的controller和service 用注入的时候，都要进行申明，目的是为了压缩混淆，
+  如 angular.modal.controller('TabCtrl’,[‘$scope’,function($scope){}]);
 6.尽量谨慎使用$rootScope.$broadcast  因为$rootScope 不会在controller销毁的时候被回收
 7.scss的规范写法
    approve-list {
@@ -96,8 +97,8 @@ Xcode
 10. 在一个controller 里面，变量都在最上面，函数在下面，因为js执行的时候，他也会自动先去执行变量的定义
 ```
 
-
-###关于app下面的文件夹
+#关于app下面的文件夹
+```
 1、app目录下有config 和configProd，configxml和configxmlProd文件，
    resources目录下有dev和prod文件分别对应开发环境和正式环境。
    需要自已配置对应的文件，resources没有开发和正式环境的区分可直接把cev和prod文件下的图片设置成一样的
@@ -106,4 +107,5 @@ Xcode
    引用service.js里面的方法记得注入publicMethod
    
 3、在page下面新建.scss文件的时候    注意theme文件夹里面的app.core.scss的修改
+```
 
