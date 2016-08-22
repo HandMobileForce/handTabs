@@ -2,6 +2,7 @@
  * Created by gusenlin on 16/4/24.
  */
 angular.module('loginModule')
+
   .controller('loginCtrl', [
     '$scope',
     '$state',
