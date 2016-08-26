@@ -14,15 +14,15 @@ angular.module('contactModule')
 
 
       //数据来源
-      $scope.columnName = "姓名";
+      $scope.userColumnName = "姓1名";
 
-      $scope.headData = [
+      $scope.userHeadData = [
         {"headItem": "语文"}, {"headItem": "数学"}, {"headItem": "英语"},
         {"headItem": "物理"}, {"headItem": "化学"}, {"headItem": "生物"},
         {"headItem": "历史"}, {"headItem": "地理"}, {"headItem": "政治"}
       ];
 
-      $scope.bodyData = [
+      $scope.userBodyData = [
         {
           "code": "0001",
           "name": "张三",
