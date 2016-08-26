@@ -24,7 +24,6 @@ var notify = require('gulp-notify');//提示信息
 var gulpNgConfig = require('gulp-ng-config');//提示信息
 
 var jsFilePath = [
-  //'app/lib/hand-api/*.js',
   'app/scripts/*.js',
   'app/scripts/*/*.js',
   'app/*.js',
@@ -32,7 +31,6 @@ var jsFilePath = [
   'app/pages/**/**/*.js'];
 
 var htmlFilePath = [
-  //'app/lib/hand-api/**/*.html',
   'app/pages/**/*.html',
   'app/pages/**/**/*.html'];
 
