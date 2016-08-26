@@ -93,17 +93,17 @@ Xcode
 4.javascript代码字符串定义用单引号  比如 var target=''
 5.angular的对象里面不要使用闭包
 6.angular的controller和service 用注入的时候，都要进行申明，目的是为了压缩混淆，如 angular.modal.controller('TabCtrl’,[‘$scope’,function($scope){}]);
-6.尽量谨慎使用$rootScope.$broadcast  因为$rootScope 不会在controller销毁的时候被回收
-7.scss的规范写法
+7.尽量谨慎使用$rootScope.$broadcast  因为$rootScope 不会在controller销毁的时候被回收
+8.scss的规范写法
    approve-list {
      ##
      .approve-item{
      ##
      }
    }
-8.代码里面一定要有注释
-9.angularJS项目 逻辑功能不要全部写在controller里面，因该写在service里面
-10. 在一个controller 里面，变量都在最上面，函数在下面，因为js执行的时候，他也会自动先去执行变量的定义
-11. 在使用指令的时候用hms打头，dom，content写在template里面。
+9.代码里面一定要有注释
+10.angularJS项目 逻辑功能不要全部写在controller里面，因该写在service里面
+11. 在一个controller 里面，变量都在最上面，函数在下面，因为js执行的时候，他也会自动先去执行变量的定义
+12. 在使用指令的时候用hms打头，dom，content写在template里面。
 ```
 

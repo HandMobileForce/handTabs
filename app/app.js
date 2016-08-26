@@ -23,7 +23,6 @@ var myApp = angular.module('myApp', [
   'applicationModule',
   'myInfoModule',
   'utilModule',
-  //'derectiveModule',
   'hmsDerectives',
   'utilsModule',
   'serviceModule',
