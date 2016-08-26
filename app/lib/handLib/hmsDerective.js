@@ -48,17 +48,11 @@ angular.module('hmsDerectives', [])
           handApiBodyData: '=bodydata'
         },
         templateUrl: 'build/lib/handLib/hmsDirectiveHtml/hmsTable.html',
-        link: function (scope, element, attrs) {
-          var ta = element[0], $ta = element;
-        },
         controller: function ($scope, $attrs, $element) {
-          //滑动定位
           $scope.scroll = function () {
             var scrollLeft = $ionicScrollDelegate.$getByHandle('hmsTableBody').getScrollPosition().left;
             $ionicScrollDelegate.$getByHandle('hmsTableHeader').scrollTo(scrollLeft, 0);
           };
-
-          //自适应列宽
           $scope.hmsResetWidth = function (index, str) {
             var newWidth = str.length * 0.875 + 0.5;
             if (newWidth > 3.5) {

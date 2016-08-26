@@ -1,6 +1,6 @@
 # handTabs 模板
 
-# 工程介绍
+# 模板介绍
 ```
 1、app目录下有config文件夹，里面有devConfig.json和prodConfig.json。对应开发环境和正式环境。
 
