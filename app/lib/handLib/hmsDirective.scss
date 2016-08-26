@@ -44,23 +44,13 @@
 }
 
 .HandApiTable .column-default-width {
-  width: 4rem;
+  width: 3.5rem;
 }
 
 .HandApiTable .text-overflow-ellipsis {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-.HandApiTable .isHoliday {
-  background-color: #9cf;
-}
-
-.HandApiTable .isTodo {
-  /*background-color: #ffabd7;*/
-  background-color: red;
-  /*color: red;*/
 }
 
 .HandApiTable .btn {

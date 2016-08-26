@@ -14,7 +14,7 @@ angular.module('contactModule')
 
 
       //数据来源
-      $scope.userColumnName = "姓1名";
+      $scope.userColumnName = "姓名";
 
       $scope.userHeadData = [
         {"headItem": "语文"}, {"headItem": "数学"}, {"headItem": "英语"},
