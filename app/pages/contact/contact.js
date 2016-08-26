@@ -45,7 +45,7 @@ angular.module('contactModule')
             {"headItem": "语文", "bodyValue": "89"},
             {"headItem": "数学", "bodyValue": "118"},
             {"headItem": "英语", "bodyValue": "88"},
-            {"headItem": "物理", "bodyValue": "22"},
+            {"headItem": "物理", "bodyValue": "134321423414444444421412414124"},
             {"headItem": "化学", "bodyValue": "51"},
             {"headItem": "生物", "bodyValue": "78"},
             {"headItem": "历史", "bodyValue": "62"},

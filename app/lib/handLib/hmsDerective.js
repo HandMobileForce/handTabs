@@ -2,9 +2,8 @@
  * Created by 2016年7月30日
  */
 
-//自定义direcitve(handApiMouseEven)操作DOM元素---选中为红色、取消无样式。
-angular.module('derectiveModule', [])
-  .directive('handApiInputNumber', function ($ionicLoading) {
+angular.module('hmsDerectives', [])
+  .directive('hmsInputNumber', function ($ionicLoading) {
     return {
       link: function (scope, iElement, iAttrs, controller) {
         scope.$watch(iAttrs.ngModel, function (newVal, oldVal) {
@@ -24,12 +23,13 @@ angular.module('derectiveModule', [])
       }
     };
   })
-  .directive('handApiMouseEven', function ($ionicLoading) {
+  //自定义direcitve(hmsMouseEven)操作DOM元素---选中为自定义颜色、取消无样式。
+  .directive('hmsMouseEven', function ($ionicLoading) {
     return {
       link: function (scope, iElement, iAttrs, controller) {
-        console.log("选择的颜色：", iAttrs.handApiMouseEven);
+        console.log("选择的颜色：", iAttrs.hmsMouseEven);
         iElement.bind('mouseenter', function () {
-          iElement.css('color', iAttrs.handApiMouseEven);
+          iElement.css('color', iAttrs.hmsMouseEven);
         });
         iElement.bind('mouseleave', function () {
           iElement.css('color', '');
@@ -37,7 +37,7 @@ angular.module('derectiveModule', [])
       }
     };
   })
-  .directive('handApiTable', ['$timeout', '$ionicScrollDelegate',
+  .directive('hmsTable', ['$timeout', '$ionicScrollDelegate',
     function ($timeout, $ionicScrollDelegate) {
       return {
         restrict: 'ACE',
@@ -47,20 +47,19 @@ angular.module('derectiveModule', [])
           handApiHeadData: '=param2',
           handApiBodyData: '=param3'
         },
-        templateUrl: 'build/pages/directiveHtml/handApiTable.html',
+        templateUrl: 'build/lib/handLib/hmsDirectiveHtml/hmsTable.html',
         link: function (scope, element, attrs) {
           var ta = element[0], $ta = element;
-          //添加class，用于CSS
         },
         controller: function ($scope, $attrs, $element) {
           //滑动定位
           $scope.scroll = function () {
-            var scrollLeft = $ionicScrollDelegate.$getByHandle('handApiTableBody').getScrollPosition().left;
-            $ionicScrollDelegate.$getByHandle('handApiTableHeader').scrollTo(scrollLeft, 0);
+            var scrollLeft = $ionicScrollDelegate.$getByHandle('hmsTableBody').getScrollPosition().left;
+            $ionicScrollDelegate.$getByHandle('hmsTableHeader').scrollTo(scrollLeft, 0);
           };
 
           //自适应列宽
-          $scope.handApiResetWidth = function (index, str) {
+          $scope.hmsResetWidth = function (index, str) {
             var newWidth = str.length * 0.875 + 0.5;
             if (newWidth > 3.5) {
               var className = "column-" + index;

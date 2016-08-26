@@ -11,6 +11,7 @@ var contactModule = angular.module('contactModule', []);
 var applicationModule = angular.module('applicationModule', []);
 var myInfoModule = angular.module('myInfoModule', []);
 var utilsModule = angular.module('utilsModule', []);
+var HmsModule = angular.module('HmsModule', []);
 
 var myApp = angular.module('myApp', [
   'ionic',
@@ -22,9 +23,11 @@ var myApp = angular.module('myApp', [
   'applicationModule',
   'myInfoModule',
   'utilModule',
-  'derectiveModule',
+  //'derectiveModule',
+  'hmsDerectives',
   'utilsModule',
-  'serviceModule'
+  'serviceModule',
+  'HmsModule'
 ]);
 
 angular.module('myApp')

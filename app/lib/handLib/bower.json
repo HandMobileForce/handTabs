@@ -1,10 +1,10 @@
 {
-  "name": "hand-api",
-  "homepage": "https://github.com/HandMobileForce/hand-api",
+  "name": "handLib",
+  "homepage": "https://github.com/HandMobileForce/handLib",
   "authors": [
     "qi.he <qi.he@hand-china.com>"
   ],
-  "description": "hand的指令库",
+  "description": "hand指令库",
   "main": "",
   "license": "MIT",
   "ignore": [

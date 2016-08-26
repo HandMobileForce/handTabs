@@ -11,7 +11,7 @@
         "ngCordova": "0.1.26-alpha",
         "cryptojslib" : "",
         "jquery": "",
-        "hand-api":""
+        "handLib":""
     },
     "devDependencies": {
     }

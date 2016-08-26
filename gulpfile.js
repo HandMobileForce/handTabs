@@ -23,16 +23,45 @@ var sourcemaps = require('gulp-sourcemaps');
 var notify = require('gulp-notify');//提示信息
 var gulpNgConfig = require('gulp-ng-config');//提示信息
 
-var jsFilePath = ['app/lib/hand-api/*.js', 'app/scripts/*.js', 'app/scripts/*/*.js', 'app/*.js', 'app/pages/**/*.js', 'app/pages/**/**/*.js'];
-var htmlFilePath = ['app/lib/hand-api/**/*.html', 'app/pages/**/*.html', 'app/pages/**/**/*.html'];
-var imagePath = ["app/img/*", "app/img/*/*"];
+var jsFilePath = [
+  //'app/lib/hand-api/*.js',
+  'app/scripts/*.js',
+  'app/scripts/*/*.js',
+  'app/*.js',
+  'app/pages/**/*.js',
+  'app/pages/**/**/*.js'];
 
-var configPath = ['app/config/*'];
-var configPathProd = ['app/configprod/*'];
-var configXMLPath = ['app/configxml/*'];
-var configXMLProdPath = ['app/configxmlprod/*'];
-var resourcePath = ['app/resources/dev/*/*/*', 'app/resources/dev/*.png'];
-var resourcePathProd = ['app/resources/prod/*/*/*', 'app/resources/prod/*.png'];
+var htmlFilePath = [
+  //'app/lib/hand-api/**/*.html',
+  'app/pages/**/*.html',
+  'app/pages/**/**/*.html'];
+
+var imagePath = [
+  "app/img/*",
+  "app/img/*/*"];
+
+//配置开发环境 的正式环境的 config.Xml文件 和  app图标、启动页
+var configXMLPath = ['publish/dev/configxmlDev/*'];
+var configXMLProdPath = ['publish/prod/configxmlprod/*'];
+var resourcePath = ['publish/dev/resourcesDev/*/*/*', 'publish/dev/resourcesDev/*.png'];
+var resourcePathProd = ['publish/prod/resourcesProd/*/*/*', 'publish/prod/resourcesProd/*.png'];
+
+var libDevFilePath = [
+  'app/lib/**/*.*',
+  'app/lib/**/**/*.*',
+  'app/lib/**/**/**/*.*'];
+
+var libPublishFilePath = [
+  'app/lib/**/css/ionic.min.css',
+  'app/lib/**/fonts/*.*',
+  'app/lib/**/js/ionic.bundle.js',
+  'app/lib/**/rollups/md5.js',
+  'app/lib/**/dist/jquery.min.js',
+  'app/lib/**/dist/ng-cordova.js',
+  'app/lib/**/dist/ionic-datepicker.bundle.min.js',
+  'app/lib/**/hmsTable.html',
+  'app/lib/**/hmsDerective.js'
+];
 
 // Clean Task
 gulp.task('clean', function () {
@@ -63,57 +92,22 @@ gulp.task('rootHtml', function () {
 
 gulp.task('html', [/*'rootHtml',*/ 'pagesHtml']);
 
-// Copy Ionic Lib
-gulp.task('copy-css-lib', function () {
-  return gulp.src('app/lib/ionic/css/ionic.css')
-    .pipe(gulp.dest('www/build/lib/ionic/css'));
-});
-
-gulp.task('copy-js-lib', function () {
-  return gulp.src('app/lib/ionic/js/ionic.bundle.js')
-    .pipe(gulp.dest('www/build/lib/ionic/js'));
-});
-
-gulp.task('copy-font-lib', function () {
-  return gulp.src('app/lib/ionic/fonts/*.*')
-    .pipe(gulp.dest('www/build/lib/ionic/fonts'));
-});
-
-gulp.task('copy-ng-cordova-lib', function () {
-  return gulp.src('app/lib/ngCordova/dist/ng-cordova.js')
-    .pipe(gulp.dest('www/build/lib/ngCordova/dist'));
-});
-
-gulp.task('copy-cryptojs-lib-components', function () {
-  return gulp.src('app/lib/cryptojslib/components/*.js')
-    .pipe(gulp.dest('www/build/lib/cryptojslib/components'));
-});
-
-gulp.task('copy-cryptojs-lib-rollups', function () {
-  return gulp.src('app/lib/cryptojslib/rollups/*.js')
-    .pipe(gulp.dest('www/build/lib/cryptojslib/rollups'));
-});
-
-gulp.task('copy-jquery-lib', function () {
-  return gulp.src('app/lib/jquery/dist/*.js')
-    .pipe(gulp.dest('www/build/lib/jquery/dist'));
-});
-
 // Handle img
 gulp.task('copy-img', function () {
   return gulp.src(imagePath)
     .pipe(gulp.dest('www/build/img'));
 });
 
-gulp.task('copy-lib', [
-  'copy-css-lib',
-  'copy-js-lib',
-  'copy-font-lib',
-  'copy-jquery-lib',
-  'copy-ng-cordova-lib',
-  'copy-cryptojs-lib-components',
-  'copy-cryptojs-lib-rollups',
-  'copy-img']);
+// Copy Ionic Lib
+gulp.task('copy-dev-libs', function () {
+  return gulp.src(libDevFilePath)
+    .pipe(gulp.dest('www/build/lib'));
+});
+
+gulp.task('copy-prod-libs', function () {
+  return gulp.src(libPublishFilePath)
+    .pipe(gulp.dest('www/build/lib'));
+});
 
 // Compile Sass
 gulp.task('sass', function () {
@@ -182,7 +176,7 @@ gulp.task('watch', function () {
 
 // Handle config 开发环境
 gulp.task('copy-config', function () {
-  return gulp.src(configPath)
+  return gulp.src('app/config/devConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
@@ -190,7 +184,7 @@ gulp.task('copy-config', function () {
 
 // Handle config 正式环境
 gulp.task('copy-config-prod', function () {
-  return gulp.src(configPathProd)
+  return gulp.src('app/config/prodConfig.json')
     .pipe(gulpNgConfig('baseConfig'))
     .pipe(rename("baseConfig.js"))
     .pipe(gulp.dest('app/scripts'))
@@ -225,7 +219,8 @@ gulp.task('resourceProd', function () {
 gulp.task('build-dev', function (callback) {
   runSequence('copy-dev', [
     'lint',
-    'copy-lib',
+    'copy-dev-libs',
+    'copy-img',
     'sass',
     'scripts',
     'html',
@@ -237,7 +232,8 @@ gulp.task('build-dev', function (callback) {
 gulp.task('build-prod', function (callback) {
   runSequence('copy-prod', [
     'lint',
-    'copy-lib',
+    'copy-prod-libs',
+    'copy-img',
     'sass',
     'scripts',
     'html',
@@ -245,7 +241,6 @@ gulp.task('build-prod', function (callback) {
     'copy-configxml-prod',
     'resourceProd'], callback);
 });
-
 
 // Default Task
 gulp.task('default', ['run-dev']);
