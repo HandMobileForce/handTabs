@@ -104,5 +104,6 @@ Xcode
 8.代码里面一定要有注释
 9.angularJS项目 逻辑功能不要全部写在controller里面，因该写在service里面
 10. 在一个controller 里面，变量都在最上面，函数在下面，因为js执行的时候，他也会自动先去执行变量的定义
+11. 在使用指令的时候用hms打头，dom，content写在template里面。
 ```
 
