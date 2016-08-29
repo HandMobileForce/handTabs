@@ -91,7 +91,7 @@ Xcode
 2.html 尽量不要有style=“”
 3.javascript代码变量第二个单词首字母大写  比如 timeOffManagment
 4.javascript代码字符串定义用单引号  比如 var target=''
-5.angular的对象里面不要使用闭包
+5.angular的对象里面谨慎使用闭包
 6.angular的controller和service 用注入的时候，都要进行申明，目的是为了压缩混淆，
   如 angular.modal.controller('TabCtrl’,[‘$scope’,function($scope){}]);
 7.尽量谨慎使用$rootScope.$broadcast  因为$rootScope 不会在controller销毁的时候被回收
