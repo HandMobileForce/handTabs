@@ -14,11 +14,11 @@
     "test",
     "tests"
   ],
-  "_release": "499f014471",
+  "_release": "13ba640f3d",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "499f014471bc9f120b97c0d073ce98df8d2a2503"
+    "commit": "13ba640f3d2bf45961ed6d43fb17c4f6fb0eadd9"
   },
   "_source": "https://github.com/HandMobileForce/handLib.git",
   "_target": "*",
