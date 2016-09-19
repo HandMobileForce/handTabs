@@ -1,0 +1,14 @@
+{
+  "name": "gesture-lock",
+  "homepage": "https://github.com/wangkaihua/gesture-lock",
+  "_release": "7fa871a809",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7fa871a8093b428bb75f12745bd33e5a84fbb6b7"
+  },
+  "_source": "https://github.com/wangkaihua/gesture-lock.git",
+  "_target": "*",
+  "_originalSource": "gesture-lock",
+  "_direct": true
+}
