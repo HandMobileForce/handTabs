@@ -1,5 +1,6 @@
 /**
  * Created by zhangsongsong on 2016-05-04.
+ * Improve by yuanmeng on 2016-09-14
  */
 function getDis(a, b) {                                           //计算两个坐标之间的距离
   return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
@@ -10,12 +11,14 @@ var H5lock = function (obj) {                                 //初始化H5加�
   this.CHANGE_PASSWORD = 1;
   this.UNLOCK = 2;
   this.RMLOCK = 3;
-  this.height = obj.height;
-  this.width = obj.width;
+  this.height = obj.height * 2;                               //扩展画布提高精细度已抗锯齿
+  this.width = obj.width * 2;
   this.miniHeight = obj.miniHeight;
   this.miniWidth = obj.miniWidth;
   this.fillStyle = obj.fillStyle || '#1992EA';
   this.strokeStyle = obj.strokeStyle || '#1992EA';
+  this.miniFillStyle = obj.miniFillStyle || '#1992EA';
+  this.miniStrokeStyle = obj.miniStrokeStyle || '#1992EA';
   this.lineWidth = obj.lineWidth || 2;
   this.canvasID = obj.canvasID || 'canvas';
   this.resetID = obj.resetID || '';
@@ -34,7 +37,7 @@ var H5lock = function (obj) {                                 //初始化H5加�
 
 H5lock.prototype.checkPass = function (psw1, psw2) {             // 检测密码，判断是否两次输入的密码一样
   var p1 = '',
-      p2 = '';
+    p2 = '';
   for (var i = 0; i < psw1.length; i++) {
     if ( typeof psw1 == 'string'){
       p1 += psw1.slice(i, i +1);
@@ -51,8 +54,8 @@ H5lock.prototype.checkPass = function (psw1, psw2) {             // 检测密码
 H5lock.prototype.getPosition = function (e) {                                     //获取touch点相对于canvas的坐标
   var rect = e.currentTarget.getBoundingClientRect();
   var po = {
-    x: e.touches[0].clientX - rect.left,
-    y: e.touches[0].clientY - rect.top
+    x: (e.touches[0].clientX - rect.left) * 2,
+    y: (e.touches[0].clientY - rect.top) * 2
   };
   return po;
 };
@@ -65,7 +68,7 @@ H5lock.prototype.createCircle = function () {// 创建解锁点的坐标，根�
   this.restPoint = [];            //存储所有未滑过的圆圈
   this.r = this.ctx.canvas.width / (1 + 3 * n);// 公式计算  this.ctx.canvas画布对象(最左边两个半径大小距离，剩下的为4×n个距离)
   var r = this.r;
-  if( this.miniCtx && ( this.step == 0 || ( this.step == 1 && this.operation == this.CHANGE_PASSWORD )) ){       //包含小九宫格的初始化
+  if( this.miniCtx && ( ( this.step == 0 && ( this.operation == this.CHANGE_PASSWORD || this.operation == this.INIT_PASSWORD ) )|| ( this.step == 1 && this.operation == this.CHANGE_PASSWORD )) ){       //包含小九宫格的初始化
     this.miniR = this.miniCtx.canvas.width / (1 + 3 * n);
     var miniR = this.miniR;
     for (var i = 0; i < n; i++) {         //初始化圆圈数组对象以及未滑过的圆圈数组对象
@@ -117,7 +120,7 @@ H5lock.prototype.drawCle = function (x, y , isMini) {                           
     this.ctx.closePath();                                                           //创建从当前点回到起始点的路径
     this.ctx.stroke();                                                              //绘制已定义的路径
   } else {                                                                          //初始化小九宫格
-    this.miniCtx.strokeStyle = this.strokeStyle;
+    this.miniCtx.strokeStyle = this.miniStrokeStyle;
     this.miniCtx.lineWidth = this.lineWidth;
     this.miniCtx.beginPath();
     this.miniCtx.arc(x, y, this.miniR, 0, Math.PI * 2, true);
@@ -134,7 +137,7 @@ H5lock.prototype.drawPoint = function () {                                      
     this.ctx.closePath();
     this.ctx.fill();
     if ( this.miniCtx && ( ( this.operation == this.INIT_PASSWORD && this.step == 0 ) || ( this.operation == this.CHANGE_PASSWORD && this.step != 2 ) ) ){
-      this.miniCtx.fillStyle = this.fillStyle;
+      this.miniCtx.fillStyle = this.miniFillStyle;
       this.miniCtx.beginPath();
       this.miniCtx.arc(this.lastPoint[i].miniX, this.lastPoint[i].miniY, this.miniR, 0, Math.PI * 2, true);
       this.miniCtx.closePath();
@@ -156,7 +159,7 @@ H5lock.prototype.drawLine = function (po, lastPoint) {                          
   this.ctx.closePath();                                                            //创建从当前点回到起始点的路径
 };
 
-H5lock.prototype.drawTriangle = function (fromPt, toPt) {                         //绘制三角形箭头
+H5lock.prototype.drawTriangle = function (fromPt, toPt) {   //绘制三角形箭头
   if(this.haveDelta==true){
     this.ctx.beginPath();
     this.ctx.fillStyle = this.fillStyle;
@@ -233,6 +236,36 @@ H5lock.prototype.pickPoints = function (fromPt, toPt) {
   }
 };
 
+H5lock.prototype.errorDraw = function(){                        //错误时绘制红色轨迹
+  var oldFillStyle = this.fillStyle;
+  var oldStrokeStyle = this.strokeStyle;
+  var self = this;
+  this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+  for (var i = 0; i < this.arr.length; i++) {                                         //每帧先把面板画出来
+    this.drawCle(this.arr[i].x, this.arr[i].y, false);
+  }
+  this.fillStyle = 'red';
+  this.strokeStyle = 'red';
+  for( i = 0; i < this.lastPoint.length - 1; i++){
+    this.drawTriangle(this.lastPoint[i], this.lastPoint[i + 1]);
+  }
+  this.drawPoint(this.lastPoint);
+  this.ctx.beginPath();
+  this.ctx.strokeStyle = this.fillStyle;
+  this.ctx.lineWidth = this.lineWidth;
+  this.ctx.moveTo(this.lastPoint[0].x, this.lastPoint[0].y);
+  for (i = 1; i < this.lastPoint.length; i++) {
+    this.ctx.lineTo(this.lastPoint[i].x, this.lastPoint[i].y);
+  }
+  this.ctx.stroke();
+  this.ctx.closePath();
+  setTimeout(function () {
+    self.ctx.clearRect(0, 0, self.ctx.canvas.width, self.ctx.canvas.height);
+    self.fillStyle = oldFillStyle;
+    self.strokeStyle = oldStrokeStyle;
+  }, 500);
+};
+
 H5lock.prototype.update = function (po) {                                         //核心变换方法在touchmove时候调用
   this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   if( this.miniCtx && ( ( this.operation == this.INIT_PASSWORD && this.step == 0 ) || ( this.operation == this.CHANGE_PASSWORD && this.step != 2 ) ) ){
@@ -255,7 +288,7 @@ H5lock.prototype.update = function (po) {                                       
 
   for (i = 0; i < this.restPoint.length; i++) {                              //更新的时候判断移动到的点是否在剩余节点数组里面
     var pt = this.restPoint[i];
-    if ( getDis(po, pt) < this.r) {
+    if ( getDis(po, pt) < ( this.r * 1.2 ) ) {
       this.drawPoint(pt.x, pt.y);                                                   //如果来到一个新的圆圈，我们需要把圆心画出来
       this.pickPoints(this.lastPoint[this.lastPoint.length - 1], pt);
       if( this.lastPoint.length > 1){
@@ -294,7 +327,7 @@ H5lock.prototype.setDesc = function ( desc ){                                   
   }
 };
 
-H5lock.prototype.init = function () {//程序入口
+H5lock.prototype.init = function () {                                               //程序入口
   this.password = window.localStorage.getItem('gesturePassword') ? window.localStorage.getItem('gesturePassword') : '';         //是否已经初始化密码
   this.lastPoint = [];
   this.touchFlag = false;                                                           //是否开始手势解锁
@@ -304,7 +337,7 @@ H5lock.prototype.init = function () {//程序入口
   this.ctx.globalCompositeOperation = 'source-atop';
   this.canvas.width = this.width;
   this.canvas.height = this.height;
-  if( this.miniCanvasID && ( this.operation == this.INIT_PASSWORD || this.operation == this.CHANGE_PASSWORD ) ){
+  if( this.miniCanvasID ){
     this.miniCanvas = document.getElementById(this.miniCanvasID);                   //获取小九宫格canvas
     this.miniCtx = this.miniCanvas.getContext('2d');
     this.miniCtx.globalCompositeOperation = 'source-atop';
@@ -318,6 +351,10 @@ H5lock.prototype.init = function () {//程序入口
   if ( this.resetID ){
     this.resetBtn = document.getElementById(this.resetID);
   }
+  this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);     //清空所有指定区域的像素
+  if( this.miniCtx ){
+    this.miniCtx.clearRect(0, 0, this.miniCtx.canvas.width, this.miniCtx.canvas.height);     //清空小九宫格区域的像素
+  }
   this.createCircle();
   this.bindEvent();                                                                   //绑定画布上的事件监听
 };
@@ -329,10 +366,12 @@ H5lock.prototype.bindEvent = function () {                                      
     var po = self.getPosition(e);               //获取触摸位置信息
     for (var i = 0; i < self.arr.length; i++) {           //如果触摸位置与各圆圈圆心位置横竖均距离少于r，则设置触摸设置密码开始
       if (Math.abs(po.x - self.arr[i].x) < self.r && Math.abs(po.y - self.arr[i].y) < self.r) {
-        self.touchFlag = true;
-        self.drawPoint(self.arr[i].x, self.arr[i].y);
-        self.lastPoint.push(self.arr[i]);
-        self.restPoint.splice(i, 1);
+        if ( self.lastPoint.length == 0 ){
+          self.touchFlag = true;
+          self.drawPoint(self.arr[i].x, self.arr[i].y);
+          self.lastPoint.push(self.arr[i]);
+          self.restPoint.splice(i, 1);
+        }
         break;
       }
     }
@@ -349,6 +388,7 @@ H5lock.prototype.bindEvent = function () {                                      
         if(self.step == 0){
           if( self.lastPoint.length < 4) {
             self.setDesc('请至少连接四个点');
+            self.errorDraw();
             self.errorCallback();
           } else {
             self.firstPassword = self.lastPoint;
@@ -363,6 +403,7 @@ H5lock.prototype.bindEvent = function () {                                      
             self.successInitCallback();
           } else {
             self.setDesc('两次密码不一致');
+            self.errorDraw();
             self.errorCallback();
           }
         }
@@ -373,11 +414,13 @@ H5lock.prototype.bindEvent = function () {                                      
             self.setDesc('请设置新密码');
           } else {
             self.setDesc('原密码错误');
+            self.errorDraw();
             self.errorCallback();
           }
         } else if (self.step == 1) {
           if( self.lastPoint.length < 4) {
             self.setDesc('请至少连接四个点');
+            self.errorDraw();
             self.errorCallback();
           } else {
             self.firstPassword = self.lastPoint;
@@ -392,6 +435,7 @@ H5lock.prototype.bindEvent = function () {                                      
             self.successChangeCallback();
           } else {
             self.setDesc('两次密码不一致');
+            self.errorDraw();
             self.errorCallback();
           }
         }
@@ -401,6 +445,7 @@ H5lock.prototype.bindEvent = function () {                                      
           self.successUnlockCallback();
         } else {
           self.setDesc('密码错误');
+          self.errorDraw();
           self.errorCallback();
         }
       } else if ( self.operation == self.RMLOCK){                     //取消密码
@@ -410,12 +455,13 @@ H5lock.prototype.bindEvent = function () {                                      
           self.successRmLockCallback();
         } else {
           self.setDesc('密码错误');
+          self.errorDraw();
           self.errorCallback();
         }
       }
       setTimeout(function () {
         self.reset();
-      }, 200);
+      }, 500);
     }
   }, false);
   if( this.resetBtn ){
