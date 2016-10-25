@@ -215,27 +215,25 @@ gulp.task('resourceProd', function () {
 });
 
 gulp.task('build-dev', function (callback) {
-  runSequence('copy-dev', [
+  runSequence('copy-dev', 'copy-config',[
     'lint',
     'copy-dev-libs',
     'copy-img',
     'sass',
     'scripts',
     'html',
-    'copy-config',
     'copy-configxml',
     'resource'], callback);
 });
 
 gulp.task('build-prod', function (callback) {
-  runSequence('copy-prod', [
+  runSequence('copy-prod', 'copy-config-prod',[
     'lint',
     'copy-prod-libs',
     'copy-img',
     'sass',
     'scripts',
     'html',
-    'copy-config-prod',
     'copy-configxml-prod',
     'resourceProd'], callback);
 });
