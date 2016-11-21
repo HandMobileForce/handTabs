@@ -32,11 +32,9 @@ $ bower install
 $ gulp run-dev
 $ gulp build-dev
 
-# 浏览器运行app程序
-$ ionic serve
+# 浏览器运行app程序，自动检测代码改动，并且将变化反应到网页中，代码编写过程中使用
+$ gulp serve
 ```
-
-##每次修改代码后
 * 构建测试环境目录:
 ```bash
 gulp build-dev
